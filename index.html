@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helena — Filmregissør</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --black: #080808; --off-black: #111; --dark: #1a1a1a;
+  --gold: #c9a84c; --gold-light: #e8c97a;
+  --cream: #f5f0e8; --muted: #888; --white: #fff;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Space Grotesk', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
+
+nav {
+  position: fixed; top:0; left:0; right:0;
+  padding: 1.5rem 4rem;
+  display: flex; align-items: center; justify-content: space-between;
+  z-index: 100;
+  background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
+}
+.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--white); letter-spacing: 2px; font-style: italic; }
+.nav-logo span { color: var(--gold); }
+nav ul { list-style: none; display: flex; gap: 2.5rem; }
+nav ul li a { text-decoration: none; color: rgba(255,255,255,0.6); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; transition: color 0.2s; }
+nav ul li a:hover { color: var(--gold); }
+
+.hero { min-height: 100vh; position: relative; display: flex; align-items: flex-end; padding: 0 4rem 6rem; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1616469829581-73993eb86b02?w=1600&q=85') center/cover no-repeat; }
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,8,8,1) 0%, rgba(8,8,8,0.55) 50%, rgba(8,8,8,0.25) 100%); }
+.hero-content { position: relative; z-index: 1; max-width: 700px; animation: fadeUp 1.2s ease both; }
+@keyframes fadeUp { from { opacity:0; transform: translateY(40px); } to { opacity:1; transform: translateY(0); } }
+.hero-eyebrow { font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+.hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(4rem, 8vw, 7rem); line-height: 0.95; font-weight: 300; margin-bottom: 1.5rem; }
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero-sub { font-size: 1rem; color: rgba(255,255,255,0.6); line-height: 1.7; max-width: 480px; font-weight: 300; margin-bottom: 2.5rem; }
+.hero-scroll { display: flex; align-items: center; gap: 1rem; color: rgba(255,255,255,0.4); font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; }
+.scroll-line { width: 60px; height: 1px; background: var(--gold); opacity: 0.5; }
+
+.films { padding: 7rem 4rem; background: var(--black); }
+.section-eyebrow { font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+.section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 4vw, 4rem); font-weight: 300; line-height: 1.1; margin-bottom: 1rem; }
+.section-sub { color: var(--muted); font-size: 0.95rem; line-height: 1.7; font-weight: 300; max-width: 480px; margin-bottom: 4rem; }
+
+.films-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 3px; }
+.films-right { display: grid; grid-rows: 1fr 1fr 1fr; gap: 3px; }
+.film-card { position: relative; overflow: hidden; cursor: pointer; }
+.film-card.large { height: 600px; }
+.film-card.small { height: 196px; }
+.film-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
+.film-card:hover img { transform: scale(1.05); }
+.film-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(8,8,8,0.92) 0%, transparent 55%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.5rem; opacity: 0.85; transition: opacity 0.3s;
+}
+.film-card:hover .film-card-overlay { opacity: 1; }
+.film-year { font-size: 0.7rem; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 0.3rem; }
+.film-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 400; margin-bottom: 0.3rem; }
+.film-card.small .film-title { font-size: 1.2rem; }
+.film-genre { font-size: 0.75rem; color: rgba(255,255,255,0.5); }
+
+.about { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; }
+.about-image { position: relative; overflow: hidden; min-height: 600px; }
+.about-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.about-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, transparent 60%, var(--off-black)); }
+.about-content { background: var(--off-black); padding: 6rem 5rem; display: flex; flex-direction: column; justify-content: center; }
+.about-quote { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-style: italic; font-weight: 300; color: var(--gold-light); line-height: 1.4; margin-bottom: 2rem; border-left: 2px solid var(--gold); padding-left: 1.5rem; }
+.about-text { color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 1.8; font-weight: 300; margin-bottom: 1.5rem; }
+
+.portrait-strip {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px;
+  height: 400px;
+}
+.portrait-strip img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(20%); transition: filter 0.4s; }
+.portrait-strip img:hover { filter: grayscale(0%); }
+
+.timeline { padding: 7rem 4rem; background: var(--dark); }
+.timeline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 4rem; }
+.timeline-item { padding: 2.5rem 3rem; border-left: 1px solid rgba(201,168,76,0.2); position: relative; transition: background 0.3s; }
+.timeline-item:hover { background: rgba(201,168,76,0.04); }
+.timeline-item::before { content: ''; position: absolute; left: -5px; top: 2.8rem; width: 9px; height: 9px; border-radius: 50%; background: var(--gold); }
+.timeline-year { font-size: 0.72rem; letter-spacing: 3px; color: var(--gold); margin-bottom: 0.5rem; }
+.timeline-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; margin-bottom: 0.5rem; }
+.timeline-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+
+.gallery { padding: 7rem 4rem; background: var(--black); }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 220px 220px 220px;
+  gap: 3px; margin-top: 4rem;
+}
+.g1 { grid-column: span 5; grid-row: span 2; }
+.g2 { grid-column: span 4; }
+.g3 { grid-column: span 3; }
+.g4 { grid-column: span 3; }
+.g5 { grid-column: span 4; }
+.g6 { grid-column: span 5; }
+.g7 { grid-column: span 4; }
+.g8 { grid-column: span 3; }
+
+.gallery-item { overflow: hidden; position: relative; }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; filter: grayscale(25%); }
+.gallery-item:hover img { transform: scale(1.06); filter: grayscale(0%); }
+
+.cv { padding: 7rem 4rem; background: var(--off-black); }
+.cv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 4rem; }
+.cv-block h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: var(--gold); margin-bottom: 2rem; }
+.cv-item { padding: 1.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.cv-item:last-child { border-bottom: none; }
+.cv-meta { font-size: 0.72rem; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 0.3rem; }
+.cv-title { font-size: 1rem; font-weight: 400; margin-bottom: 0.3rem; }
+.cv-detail { font-size: 0.85rem; color: var(--muted); font-weight: 300; }
+
+.contact { padding: 8rem 4rem; background: var(--black); text-align: center; position: relative; overflow: hidden; }
+.contact::before { content: 'HELENA'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: 'Cormorant Garamond', serif; font-size: 18vw; font-weight: 300; color: rgba(255,255,255,0.02); white-space: nowrap; pointer-events: none; }
+.contact .section-title { margin: 0 auto 1rem; }
+.contact .section-sub { margin: 0 auto 3rem; text-align: center; }
+.contact-email { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 4vw, 3rem); font-style: italic; color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3); padding-bottom: 0.3rem; transition: color 0.2s; display: inline-block; margin-bottom: 3rem; }
+.contact-email:hover { color: var(--gold-light); }
+.social-links { display: flex; gap: 2rem; justify-content: center; }
+.social-link { font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+.social-link:hover { color: var(--gold); }
+
+footer { padding: 2rem 4rem; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: rgba(255,255,255,0.25); }
+.footer-logo { font-family: 'Cormorant Garamond', serif; font-style: italic; color: rgba(255,255,255,0.4); font-size: 1rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><span>H</span>elena</div>
+  <ul>
+    <li><a href="#">Filmer</a></li>
+    <li><a href="#">Historie</a></li>
+    <li><a href="#">Bilder</a></li>
+    <li><a href="#">CV</a></li>
+    <li><a href="#">Kontakt</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Filmregissør · Norge</p>
+    <h1>Fortellinger<br>som <em>brenner</em><br>seg fast</h1>
+    <p class="hero-sub">Helena skaper film som berører, utfordrer og setter spor — fra kortfilm til dokumentar, alltid med et ekte menneskelig blikk.</p>
+    <div class="hero-scroll"><div class="scroll-line"></div>Scroll for å utforske</div>
+  </div>
+</section>
+
+<section class="films">
+  <p class="section-eyebrow">Filmografi</p>
+  <h2 class="section-title">Utvalgte prosjekter</h2>
+  <p class="section-sub">Et knippe av Helenas arbeider — fra studentprosjekter til profesjonelle produksjoner.</p>
+  <div class="films-grid">
+    <div class="film-card large">
+      <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=900&q=80" alt="Mellom Fjordene" />
+      <div class="film-card-overlay">
+        <div class="film-year">2024</div>
+        <div class="film-title">Mellom Fjordene</div>
+        <div class="film-genre">Kortfilm · 18 min</div>
+      </div>
+    </div>
+    <div class="films-right">
+      <div class="film-card small">
+        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&q=80" alt="Stilleben" />
+        <div class="film-card-overlay">
+          <div class="film-year">2023</div>
+          <div class="film-title">Stilleben</div>
+          <div class="film-genre">Dokumentar · 34 min</div>
+        </div>
+      </div>
+      <div class="film-card small">
+        <img src="https://images.unsplash.com/photo-1500210600724-a6acd3d06b3f?w=600&q=80" alt="Nattskiftet" />
+        <div class="film-card-overlay">
+          <div class="film-year">2022</div>
+          <div class="film-title">Nattskiftet</div>
+          <div class="film-genre">Kortfilm · 12 min</div>
+        </div>
+      </div>
+      <div class="film-card small">
+        <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&q=80" alt="Grenser" />
+        <div class="film-card-overlay">
+          <div class="film-year">2021</div>
+          <div class="film-title">Grenser</div>
+          <div class="film-genre">Eksperimentell · 8 min</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="about">
+  <div class="about-image">
+    <img src="https://images.unsplash.com/photo-1599508704512-2f19efd1e35f?w=800&q=80" alt="Helena bak kamera" />
+  </div>
+  <div class="about-content">
+    <p class="section-eyebrow">Om Helena</p>
+    <h2 class="section-title">En lidenskap som startet tidlig</h2>
+    <p class="about-quote">"Film er den eneste kunsten som kan stoppe tiden."</p>
+    <p class="about-text">Helena vokste opp med kamera i hånden og historier i hodet. Det som begynte som korte videoer på mobil ble til en fullverdig utdannelse i filmregi.</p>
+    <p class="about-text">Med et skarpt blikk for det menneskelige og en unik evne til å skape ro i bildet, lager Helena filmer som setter seg fast lenge etter rulleteksten.</p>
+  </div>
+</div>
+
+<div class="portrait-strip">
+  <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=700&q=80" alt="På settet" />
+  <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=700&q=80" alt="Kamera" />
+  <img src="https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?w=700&q=80" alt="Klipping" />
+</div>
+
+<section class="timeline">
+  <p class="section-eyebrow">Reisen</p>
+  <h2 class="section-title">Fra drøm til regissørstolen</h2>
+  <p class="section-sub">En kort historikk over hvordan Helena ble den filmregissøren hun er i dag.</p>
+  <div class="timeline-grid">
+    <div class="timeline-item">
+      <div class="timeline-year">2018</div>
+      <div class="timeline-title">Første kortfilm</div>
+      <p class="timeline-desc">Med et lånt kamera og venner som skuespillere laget Helena sin første kortfilm i videregående.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2020</div>
+      <div class="timeline-title">Filmskolen</div>
+      <p class="timeline-desc">Tatt opp ved filmlinjen — begynte å utvikle sin egen stemme og estetikk.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2022</div>
+      <div class="timeline-title">Første festivalpremiere</div>
+      <p class="timeline-desc">"Nattskiftet" valgt ut til Nordic Film Festival og fikk strålende kritikker.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2024</div>
+      <div class="timeline-title">Ferdig utdannet</div>
+      <p class="timeline-desc">Avslutter utdannelsen med et sterkt avgangsprosjekt — klar for sitt første profesjonelle prosjekt.</p>
+    </div>
+  </div>
+</section>
+
+<section class="gallery">
+  <p class="section-eyebrow">Fra produksjon</p>
+  <h2 class="section-title">Bak kameraet</h2>
+  <p class="section-sub">Glimt fra settet — de øyeblikkene som sjelden havner på lerretet.</p>
+  <div class="gallery-grid">
+    <div class="gallery-item g1">
+      <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&q=80" alt="Produksjon" />
+    </div>
+    <div class="gallery-item g2">
+      <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&q=80" alt="Produksjon" />
+    </div>
+    <div class="gallery-item g3">
+      <img src="https://images.unsplash.com/photo-1574267432553-4b4628081c31?w=400&q=80" alt="Produksjon" />
+    </div>
+    <div class="gallery-item g4">
+      <img src="https://images.unsplash.com/photo-1569317002804-ab77bcf1bce4?w=400&q=80" alt="Produksjon" />
+    </div>
+    <div class="gallery-item g5">
+      <img src="https://images.unsplash.com/photo-1559070081-b0b0b0b0b0b0?w=600&q=80" alt="Produksjon" onerror="this.src='https://images.unsplash.com/photo-1616469829581-73993eb86b02?w=600&q=80'" />
+    </div>
+    <div class="gallery-item g6">
+      <img src="https://images.unsplash.com/photo-1540224871915-bc8ffb782bdf?w=700&q=80" alt="Produksjon" />
+    </div>
+    <div class="gallery-item g7">
+      <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&q=80" alt="Produksjon" />
+    </div>
+    <div class="gallery-item g8">
+      <img src="https://images.unsplash.com/photo-1500210600724-a6acd3d06b3f?w=400&q=80" alt="Produksjon" />
+    </div>
+  </div>
+</section>
+
+<section class="cv">
+  <p class="section-eyebrow">Curriculum Vitae</p>
+  <h2 class="section-title">Erfaring og utdanning</h2>
+  <div class="cv-grid">
+    <div class="cv-block">
+      <h3>Utdanning</h3>
+      <div class="cv-item">
+        <div class="cv-meta">2020 — 2024</div>
+        <div class="cv-title">Bachelor i filmregi</div>
+        <div class="cv-detail">Norsk filmskole, Lillehammer</div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-meta">2017 — 2020</div>
+        <div class="cv-title">Medier og kommunikasjon</div>
+        <div class="cv-detail">Videregående skole</div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-meta">2023</div>
+        <div class="cv-title">Workshopkurs i dokumentar</div>
+        <div class="cv-detail">DOX:LAB, København</div>
+      </div>
+    </div>
+    <div class="cv-block">
+      <h3>Erfaring</h3>
+      <div class="cv-item">
+        <div class="cv-meta">2023 — 2024</div>
+        <div class="cv-title">Regi & manus — "Mellom Fjordene"</div>
+        <div class="cv-detail">Eget produksjonsprosjekt</div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-meta">2022</div>
+        <div class="cv-title">Regissørassistent</div>
+        <div class="cv-detail">NRK Drama, Oslo</div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-meta">2021</div>
+        <div class="cv-title">Frilansfotograf & klipper</div>
+        <div class="cv-detail">Diverse reklameproduksjoner</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact">
+  <p class="section-eyebrow">Kontakt</p>
+  <h2 class="section-title">La oss lage noe sammen</h2>
+  <p class="section-sub" style="max-width:420px;">For samarbeid, spørsmål om prosjekter eller bare en god prat om film.</p>
+  <a href="mailto:helena@example.com" class="contact-email">helena@example.com</a>
+  <div class="social-links">
+    <a href="#" class="social-link">Instagram</a>
+    <a href="#" class="social-link">Vimeo</a>
+    <a href="#" class="social-link">LinkedIn</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Helena — Filmregissør</div>
+  <div>© 2024 · Alle rettigheter forbeholdt</div>
+</footer>
+
+</body>
+</html>
