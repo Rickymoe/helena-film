@@ -28,6 +28,20 @@ nav ul { list-style: none; display: flex; gap: 2.5rem; }
 nav ul li a { text-decoration: none; color: rgba(255,255,255,0.6); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; transition: color 0.2s; }
 nav ul li a:hover { color: var(--gold); }
 
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+.hamburger span { display: block; width: 24px; height: 1.5px; background: var(--white); transition: transform 0.3s, opacity 0.3s; }
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.mobile-menu {
+  display: none; position: fixed; inset: 0; background: rgba(8,8,8,0.97);
+  z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; font-style: italic; color: rgba(255,255,255,0.7); text-decoration: none; letter-spacing: 2px; transition: color 0.2s; }
+.mobile-menu a:hover { color: var(--gold); }
+
 .hero { min-height: 100vh; position: relative; display: flex; align-items: flex-end; padding: 0 4rem 6rem; overflow: hidden; }
 .hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1616469829581-73993eb86b02?w=1600&q=85') center/cover no-repeat; }
 .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,8,8,1) 0%, rgba(8,8,8,0.55) 50%, rgba(8,8,8,0.25) 100%); }
@@ -134,8 +148,9 @@ footer { padding: 2rem 4rem; border-top: 1px solid rgba(255,255,255,0.06); displ
 
 
 @media (max-width: 768px) {
-  nav { padding: 1rem 1.5rem; flex-wrap: wrap; }
+  nav { padding: 1rem 1.5rem; }
   nav ul { display: none; }
+  .hamburger { display: flex; }
 
   .hero { padding: 6rem 1.5rem 4rem; }
   .hero h1 { font-size: 3rem; }
@@ -183,7 +198,18 @@ footer { padding: 2rem 4rem; border-top: 1px solid rgba(255,255,255,0.06); displ
     <li><a href="#cv">CV</a></li>
     <li><a href="contact.html">Kontakt</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" aria-label="Meny">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#films" onclick="closeMenu()">Filmer</a>
+  <a href="#timeline" onclick="closeMenu()">Historie</a>
+  <a href="#gallery" onclick="closeMenu()">Bilder</a>
+  <a href="#cv" onclick="closeMenu()">CV</a>
+  <a href="contact.html">Kontakt</a>
+</div>
 
 <section class="hero">
   <div class="hero-bg"></div>
@@ -377,5 +403,17 @@ footer { padding: 2rem 4rem; border-top: 1px solid rgba(255,255,255,0.06); displ
   <div>© 2024 · Alle rettigheter forbeholdt</div>
 </footer>
 
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+function closeMenu() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+}
+</script>
 </body>
 </html>
