@@ -122,6 +122,18 @@ nav ul li a:hover { color: var(--gold); }
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; filter: grayscale(25%); }
 .gallery-item:hover img { transform: scale(1.06); filter: grayscale(0%); }
 
+.produksjon { padding: 7rem 4rem; background: var(--dark); }
+.video-wrapper {
+  position: relative; margin-top: 4rem;
+  border: 1px solid rgba(201,168,76,0.15);
+}
+.video-wrapper video { display: block; width: 100%; max-height: 70vh; object-fit: cover; }
+.video-wrapper::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  box-shadow: inset 0 0 60px rgba(8,8,8,0.6);
+  z-index: 1;
+}
+
 .cv { padding: 7rem 4rem; background: var(--off-black); }
 .cv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 4rem; }
 .cv-block h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: var(--gold); margin-bottom: 2rem; }
@@ -168,6 +180,7 @@ footer { padding: 2rem 4rem; border-top: 1px solid rgba(255,255,255,0.06); displ
   .portrait-strip { grid-template-columns: 1fr; height: auto; }
   .portrait-strip img { height: 250px; }
 
+  .produksjon { padding: 4rem 1.5rem; }
   .timeline { padding: 4rem 1.5rem; }
   .timeline-grid { grid-template-columns: 1fr; }
 
@@ -193,6 +206,7 @@ footer { padding: 2rem 4rem; border-top: 1px solid rgba(255,255,255,0.06); displ
   <a href="#" class="nav-logo"><span>H</span>elena</a>
   <ul>
     <li><a href="#films">Filmer</a></li>
+    <li><a href="#produksjon">Produksjon</a></li>
     <li><a href="#timeline">Historie</a></li>
     <li><a href="#gallery">Bilder</a></li>
     <li><a href="#cv">CV</a></li>
@@ -205,6 +219,7 @@ footer { padding: 2rem 4rem; border-top: 1px solid rgba(255,255,255,0.06); displ
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="#films" onclick="closeMenu()">Filmer</a>
+  <a href="#produksjon" onclick="closeMenu()">Produksjon</a>
   <a href="#timeline" onclick="closeMenu()">Historie</a>
   <a href="#gallery" onclick="closeMenu()">Bilder</a>
   <a href="#cv" onclick="closeMenu()">CV</a>
@@ -261,6 +276,17 @@ footer { padding: 2rem 4rem; border-top: 1px solid rgba(255,255,255,0.06); displ
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="produksjon" id="produksjon">
+  <p class="section-eyebrow">Bak kameraet</p>
+  <h2 class="section-title">Produksjon</h2>
+  <p class="section-sub">Et innblikk i prosessen — fra idé til ferdig film.</p>
+  <div class="video-wrapper">
+    <video controls preload="metadata">
+      <source src="video/Opptak1.mp4" type="video/mp4">
+    </video>
   </div>
 </section>
 
