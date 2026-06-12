@@ -344,23 +344,18 @@ nav ul li a:hover::after { transform: scaleX(1); }
 
 /* ── GALLERI INTERLUDE ──────────────────────────────── */
 .gallery { padding: 7rem 4rem; background: var(--black); }
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 290px 290px;
-  gap: 3px; margin-top: 4rem;
+.gallery-masonry {
+  columns: 4; column-gap: 3px; margin-top: 4rem;
 }
-.g1 { grid-column: span 5; grid-row: span 2; }
-.g2 { grid-column: span 7; }
-.g3 { grid-column: span 3; }
-.g4 { grid-column: span 2; }
-.g5 { grid-column: span 2; }
-.gallery-item { overflow: hidden; }
+.gallery-item {
+  break-inside: avoid; margin-bottom: 3px;
+  overflow: hidden; display: block;
+}
 .gallery-item img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  filter: grayscale(20%); transition: transform 0.5s, filter 0.4s;
+  width: 100%; display: block;
+  filter: grayscale(25%); transition: transform 0.5s ease, filter 0.4s ease;
 }
-.gallery-item:hover img { transform: scale(1.06); filter: grayscale(0%); }
+.gallery-item:hover img { transform: scale(1.04); filter: grayscale(0%); }
 
 /* ── CHAPTER 04: CV ─────────────────────────────────── */
 .cv-section { padding: 7rem 4rem; background: var(--off-black); }
@@ -457,12 +452,7 @@ footer {
 
   /* Galleri */
   .gallery { padding: 4rem 1.5rem; }
-  .gallery-grid {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-  }
-  .g1 { grid-column: span 2; grid-row: span 1; height: 220px; }
-  .g2, .g3, .g4, .g5 { grid-column: span 1; height: 150px; }
+  .gallery-masonry { columns: 2; }
 
   /* CV */
   .cv-section { padding: 4rem 1.5rem; }
@@ -642,12 +632,19 @@ footer {
   <p class="section-eyebrow reveal">Fra produksjon</p>
   <h2 class="section-title reveal">Bak kameraet</h2>
   <p class="section-sub reveal">Glimt fra settet — de øyeblikkene som sjelden havner på lerretet.</p>
-  <div class="gallery-grid">
-    <div class="gallery-item g1 reveal"><img src="images/StillBilder/IMG_7758.jpg" alt="Bak kameraet" loading="lazy" /></div>
-    <div class="gallery-item g2 reveal"><img src="images/StillBilder/IMG_7760.jpg" alt="Bak kameraet" loading="lazy" /></div>
-    <div class="gallery-item g3 reveal"><img src="images/StillBilder/IMG_7765.jpg" alt="Bak kameraet" loading="lazy" /></div>
-    <div class="gallery-item g4 reveal"><img src="images/StillBilder/IMG_7767.jpg" alt="Bak kameraet" loading="lazy" /></div>
-    <div class="gallery-item g5 reveal"><img src="images/StillBilder/IMG_7770.jpg" alt="Bak kameraet" loading="lazy" /></div>
+  <div class="gallery-masonry">
+    <div class="gallery-item"><img src="images/StillBilder/IMG_7758.jpg" alt="Bak kameraet" loading="lazy" /></div>
+    <div class="gallery-item"><img src="images/StillBilder/IMG_7767.jpg" alt="Bak kameraet" loading="lazy" /></div>
+    <div class="gallery-item"><img src="images/StillBilder/IMG_7760.jpg" alt="Bak kameraet" loading="lazy" /></div>
+    <div class="gallery-item"><img src="images/StillBilder/IMG_7770.jpg" alt="Bak kameraet" loading="lazy" /></div>
+    <div class="gallery-item"><img src="images/StillBilder/IMG_7765.jpg" alt="Bak kameraet" loading="lazy" /></div>
+    <div class="gallery-item"><img src="images/StillBilder/IMG_7758.jpg" alt="Bak kameraet" loading="lazy" /></div>
+    <div class="gallery-item"><img src="images/StillBilder/IMG_7760.jpg" alt="Bak kameraet" loading="lazy" /></div>
+    <div class="gallery-item"><img src="images/StillBilder/IMG_7767.jpg" alt="Bak kameraet" loading="lazy" /></div>
+    <div class="gallery-item"><img src="images/StillBilder/IMG_7770.jpg" alt="Bak kameraet" loading="lazy" /></div>
+    <div class="gallery-item"><img src="images/StillBilder/IMG_7765.jpg" alt="Bak kameraet" loading="lazy" /></div>
+    <div class="gallery-item"><img src="images/StillBilder/IMG_7758.jpg" alt="Bak kameraet" loading="lazy" /></div>
+    <div class="gallery-item"><img src="images/StillBilder/IMG_7760.jpg" alt="Bak kameraet" loading="lazy" /></div>
   </div>
 </section>
 
