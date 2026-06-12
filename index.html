@@ -60,6 +60,15 @@ body {
   90%  { transform: translate(-1%,  2%);   }
   100% { transform: translate(0,    0);    }
 }
+/* ── SCROLL-REVEAL ─────────────────────────────────── */
+.reveal {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: clip-path;
+}
+.reveal.visible {
+  clip-path: inset(0 0 0% 0);
+}
 </style>
 </head>
 <body>
@@ -77,7 +86,17 @@ body {
 <!-- KONTAKT -->
 <!-- FOOTER -->
 <script>
-/* JS her */
+// Scroll-reveal
+const revealThreshold = window.innerWidth <= 768 ? 0.05 : 0.12;
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: revealThreshold });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 </script>
 </body>
 </html>
