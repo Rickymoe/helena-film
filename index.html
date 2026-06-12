@@ -275,6 +275,35 @@ nav ul li a:hover::after { transform: scaleX(1); }
   font-size: 1.35rem; font-weight: 400; margin-bottom: 0.4rem;
 }
 .timeline-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
+/* ── CHAPTER 02: PRODUKSJON ─────────────────────────── */
+.produksjon { background: var(--off-black); }
+.video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-top: 4rem; }
+.video-card {
+  position: relative; overflow: hidden; cursor: pointer;
+  aspect-ratio: 16/9; background: var(--dark);
+}
+.video-card video {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.5s ease;
+}
+.video-card:hover video { transform: scale(1.04); }
+.video-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(6,6,8,0.88) 0%, transparent 55%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.1rem 1.3rem;
+}
+.video-card--placeholder {
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(201,168,76,0.12);
+}
+.video-placeholder-text {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 1.3rem; font-weight: 300; color: rgba(201,168,76,0.35); letter-spacing: 2px;
+}
+.video-card-year { font-size: 0.68rem; letter-spacing: 3px; color: var(--crimson); text-transform: uppercase; margin-bottom: 0.25rem; }
+.video-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 0.2rem; }
+.video-card-genre { font-size: 0.72rem; color: rgba(255,255,255,0.45); }
 </style>
 </head>
 <body>
@@ -393,7 +422,32 @@ nav ul li a:hover::after { transform: scaleX(1); }
     </div>
   </div>
 </section>
-<!-- CHAPTER 02: PRODUKSJON -->
+<section class="chapter produksjon" id="produksjon">
+  <div class="chapter-ghost" aria-hidden="true">02</div>
+  <div class="chapter-header reveal">
+    <div class="chapter-number">02 — Produksjon</div>
+    <p class="section-eyebrow">Bak kameraet</p>
+    <h2 class="section-title">Et innblikk i prosessen</h2>
+  </div>
+  <div class="video-grid">
+    <div class="video-card reveal" onclick="this.querySelector('video').paused ? this.querySelector('video').play() : this.querySelector('video').pause()">
+      <video preload="metadata" playsinline poster="video/Opptak1_poster.jpg" loop>
+        <source src="video/Opptak1.mp4" type="video/mp4">
+      </video>
+      <div class="video-card-overlay">
+        <div class="video-card-year">2025</div>
+        <div class="video-card-title">Klipp 15052026.15</div>
+        <div class="video-card-genre">Kortfilm · 8 sek</div>
+      </div>
+    </div>
+    <div class="video-card video-card--placeholder reveal">
+      <div class="video-placeholder-text">Video på vei!</div>
+    </div>
+    <div class="video-card video-card--placeholder reveal">
+      <div class="video-placeholder-text">Video på vei!</div>
+    </div>
+  </div>
+</section>
 <!-- CHAPTER 03: OM HELENA -->
 <!-- PORTRETT-STRIP INTERLUDE -->
 <!-- GALLERI INTERLUDE -->
