@@ -375,6 +375,45 @@ nav ul li a:hover::after { transform: scaleX(1); }
 .cv-meta { font-size: 0.68rem; letter-spacing: 2px; color: var(--crimson); text-transform: uppercase; margin-bottom: 0.25rem; }
 .cv-title { font-size: 0.97rem; font-weight: 400; margin-bottom: 0.2rem; }
 .cv-detail { font-size: 0.83rem; color: var(--muted); font-weight: 300; }
+
+/* ── KONTAKT ────────────────────────────────────────── */
+.contact { padding: 9rem 4rem; background: var(--black); text-align: center; position: relative; overflow: hidden; }
+.contact::before {
+  content: 'HELENA'; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Cormorant Garamond', serif; font-size: 18vw;
+  font-weight: 300; color: rgba(255,255,255,0.018);
+  white-space: nowrap; pointer-events: none;
+}
+.contact .section-title { margin: 0 auto 0.8rem; }
+.contact .section-sub { margin: 0 auto 3rem; text-align: center; }
+.contact-email {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 4vw, 3rem); font-style: italic;
+  color: var(--gold); text-decoration: none;
+  border-bottom: 1px solid rgba(201,168,76,0.3);
+  padding-bottom: 0.3rem; transition: color 0.2s;
+  display: inline-block; margin-bottom: 3rem;
+}
+.contact-email:hover { color: var(--gold-light); }
+.social-links { display: flex; gap: 2.5rem; justify-content: center; }
+.social-link {
+  font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s;
+}
+.social-link:hover { color: var(--crimson); }
+
+/* ── FOOTER ─────────────────────────────────────────── */
+footer {
+  padding: 2rem 4rem;
+  border-top: 1px solid var(--crimson);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.76rem; color: rgba(255,255,255,0.22);
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  color: rgba(255,255,255,0.38); font-size: 0.95rem;
+}
 </style>
 </head>
 <body>
@@ -599,8 +638,22 @@ nav ul li a:hover::after { transform: scaleX(1); }
     </div>
   </div>
 </section>
-<!-- KONTAKT -->
-<!-- FOOTER -->
+<section class="contact">
+  <p class="section-eyebrow reveal">Kontakt</p>
+  <h2 class="section-title reveal">La oss lage noe sammen</h2>
+  <p class="section-sub reveal" style="max-width:400px;">For samarbeid, spørsmål om prosjekter eller bare en god prat om film.</p>
+  <a href="mailto:hmohncke@gmail.com" class="contact-email reveal">hmohncke@gmail.com</a>
+  <div class="social-links reveal">
+    <a href="#" class="social-link">Instagram</a>
+    <a href="#" class="social-link">Vimeo</a>
+    <a href="#" class="social-link">LinkedIn</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Helena Møhncke — Filmregissør</div>
+  <div>© 2026 · Alle rettigheter forbeholdt</div>
+</footer>
 <script>
 // Scroll-reveal
 const revealThreshold = window.innerWidth <= 768 ? 0.05 : 0.12;
