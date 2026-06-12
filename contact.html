@@ -8,69 +8,142 @@
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 :root {
-  --black: #080808; --off-black: #111; --dark: #1a1a1a;
-  --gold: #c9a84c; --gold-light: #e8c97a;
-  --cream: #f5f0e8; --muted: #888; --white: #fff;
+  --black:   #060608;
+  --off-black: #111;
+  --dark:    #1a1a1a;
+  --gold:    #c9a84c;
+  --gold-light: #e8c97a;
+  --crimson: #b82035;
+  --white:   #ffffff;
+  --muted:   rgba(255,255,255,0.55);
+  --faint:   rgba(255,255,255,0.08);
 }
 html { scroll-behavior: smooth; }
 body { font-family: 'Space Grotesk', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
 
+/* ── GRAIN ─────────────────────────────────────────────── */
+.grain {
+  position: fixed; inset: 0; z-index: 999; pointer-events: none; opacity: 0.04;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)' opacity='1'/></svg>");
+  animation: grain-shift 0.5s steps(1) infinite;
+}
+@keyframes grain-shift {
+  0%   { transform: translate(0,    0);    }
+  25%  { transform: translate(-2%, -3%);   }
+  50%  { transform: translate(3%,   1%);   }
+  75%  { transform: translate(-1%,  3%);   }
+  100% { transform: translate(2%,  -1%);   }
+}
+
+/* ── SCROLL-REVEAL ─────────────────────────────────────── */
+.reveal {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: clip-path;
+}
+.reveal.visible { clip-path: inset(0 0 0% 0); }
+
+/* ── PROGRESS BAR ──────────────────────────────────────── */
+.progress-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; height: 3px;
+  z-index: 200; pointer-events: none;
+  background: rgba(255,255,255,0.05);
+}
+.progress-bar-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(to right, var(--crimson), var(--gold));
+  transition: width 0.1s linear;
+}
+
+/* ── NAV ───────────────────────────────────────────────── */
 nav {
-  position: fixed; top:0; left:0; right:0;
+  position: fixed; top: 0; left: 0; right: 0;
   padding: 1.5rem 4rem;
   display: flex; align-items: center; justify-content: space-between;
   z-index: 100;
-  background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
+  background: linear-gradient(to bottom, rgba(6,6,8,0.97), transparent);
 }
-.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--white); letter-spacing: 2px; font-style: italic; text-decoration: none; }
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
+  color: var(--white); letter-spacing: 2px; font-style: italic; text-decoration: none;
+}
 .nav-logo span { color: var(--gold); }
 nav ul { list-style: none; display: flex; gap: 2.5rem; }
-nav ul li a { text-decoration: none; color: rgba(255,255,255,0.6); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; transition: color 0.2s; }
-nav ul li a:hover, nav ul li a.active { color: var(--gold); }
+nav ul li a {
+  text-decoration: none; color: rgba(255,255,255,0.6);
+  font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase;
+  transition: color 0.2s; position: relative; padding-bottom: 2px;
+}
+nav ul li a::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: var(--crimson); transform: scaleX(0); transition: transform 0.25s;
+}
+nav ul li a:hover::after, nav ul li a.active::after { transform: scaleX(1); }
+nav ul li a:hover, nav ul li a.active { color: var(--white); }
 
-.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
-.hamburger span { display: block; width: 24px; height: 1.5px; background: var(--white); transition: transform 0.3s, opacity 0.3s; }
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 4px; background: none; border: none;
+}
+.hamburger span {
+  display: block; width: 24px; height: 1.5px; background: var(--white);
+  transition: transform 0.3s, opacity 0.3s;
+}
 .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
 .mobile-menu {
-  display: none; position: fixed; inset: 0; background: rgba(8,8,8,0.97);
+  display: none; position: fixed; inset: 0; background: rgba(6,6,8,0.97);
   z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
 }
 .mobile-menu.open { display: flex; }
-.mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; font-style: italic; color: rgba(255,255,255,0.7); text-decoration: none; letter-spacing: 2px; transition: color 0.2s; }
+.mobile-menu a {
+  font-family: 'Cormorant Garamond', serif; font-size: 2.5rem;
+  font-weight: 300; font-style: italic; color: rgba(255,255,255,0.7);
+  text-decoration: none; letter-spacing: 2px; transition: color 0.2s;
+}
 .mobile-menu a:hover { color: var(--gold); }
 
+/* ── PAGE HERO ─────────────────────────────────────────── */
 .page-hero {
-  min-height: 42vh;
+  min-height: 45vh;
   display: flex; align-items: flex-end;
-  padding: 0 4rem 5rem;
-  position: relative;
-  overflow: hidden;
+  padding: 0 4rem 6rem;
+  position: relative; overflow: hidden;
   background: var(--off-black);
 }
-.page-hero::before {
-  content: 'KONTAKT';
-  position: absolute; bottom: -1rem; left: 3rem;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 18vw; font-weight: 300;
-  color: rgba(255,255,255,0.025);
-  white-space: nowrap; pointer-events: none; line-height: 1;
+.page-hero-stripe {
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: var(--crimson); opacity: 0.7;
 }
-.page-hero-content { position: relative; z-index: 1; animation: fadeUp 1s ease both; }
-@keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
-.eyebrow { font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
-.page-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 300; line-height: 1; }
+.page-hero-ghost {
+  position: absolute; right: -0.05em; bottom: -0.2em;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(14rem, 28vw, 22rem);
+  font-weight: 300; font-style: italic;
+  color: rgba(255,255,255,0.025);
+  line-height: 1; pointer-events: none; user-select: none;
+}
+.page-hero-content { position: relative; z-index: 1; animation: fadeUp 1.2s ease both; }
+@keyframes fadeUp { from { opacity:0; transform: translateY(40px); } to { opacity:1; transform: translateY(0); } }
+.eyebrow {
+  font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--crimson); margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.eyebrow::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--crimson); }
+.page-hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 7vw, 6rem); font-weight: 300; line-height: 0.95;
+}
 .page-hero h1 em { font-style: italic; color: var(--gold); }
 
+/* ── CONTACT LAYOUT ────────────────────────────────────── */
 .contact-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  min-height: 60vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; min-height: 60vh;
 }
-
 .contact-info {
   padding: 6rem 5rem;
   background: var(--dark);
@@ -78,37 +151,40 @@ nav ul li a:hover, nav ul li a.active { color: var(--gold); }
 }
 .contact-info h2 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 2rem; font-weight: 300;
-  margin-bottom: 1rem;
+  font-size: 2rem; font-weight: 300; margin-bottom: 1rem;
 }
 .contact-info p {
-  color: rgba(255,255,255,0.55); font-size: 0.95rem;
+  color: var(--muted); font-size: 0.95rem;
   line-height: 1.8; font-weight: 300; max-width: 400px;
   margin-bottom: 3rem;
 }
-
 .contact-block { margin-bottom: 2.5rem; }
 .contact-block-label {
   font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 0.5rem;
+  color: var(--crimson); margin-bottom: 0.5rem;
 }
 .contact-block-value {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.4rem; font-weight: 300;
 }
 .contact-block-value a {
-  color: var(--white); text-decoration: none;
-  transition: color 0.2s;
+  color: var(--white); text-decoration: none; transition: color 0.2s;
 }
 .contact-block-value a:hover { color: var(--gold); }
-
 .social-row { display: flex; gap: 2rem; margin-top: 1rem; }
 .social-link {
   font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase;
   color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s;
+  position: relative; padding-bottom: 2px;
 }
-.social-link:hover { color: var(--gold); }
+.social-link::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 1px; background: var(--crimson); transform: scaleX(0); transition: transform 0.25s;
+}
+.social-link:hover::after { transform: scaleX(1); }
+.social-link:hover { color: var(--white); }
 
+/* ── FORM ──────────────────────────────────────────────── */
 .contact-form-wrap {
   padding: 6rem 5rem;
   background: var(--off-black);
@@ -116,10 +192,8 @@ nav ul li a:hover, nav ul li a.active { color: var(--gold); }
 }
 .contact-form-wrap h2 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 2rem; font-weight: 300;
-  margin-bottom: 2.5rem;
+  font-size: 2rem; font-weight: 300; margin-bottom: 2.5rem;
 }
-
 .form-group { margin-bottom: 1.8rem; }
 .form-group label {
   display: block; font-size: 0.7rem; letter-spacing: 3px;
@@ -129,71 +203,69 @@ nav ul li a:hover, nav ul li a.active { color: var(--gold); }
 .form-group textarea,
 .form-group select {
   width: 100%;
-  background: rgba(255,255,255,0.04);
+  background: var(--faint);
   border: 1px solid rgba(255,255,255,0.1);
   color: var(--white);
   font-family: 'Space Grotesk', sans-serif;
   font-size: 0.95rem; font-weight: 300;
   padding: 0.9rem 1.2rem;
-  border-radius: 0;
-  outline: none;
+  border-radius: 0; outline: none;
   transition: border-color 0.2s;
   appearance: none;
 }
 .form-group select {
   cursor: pointer;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 1.2rem center;
-  padding-right: 2.5rem;
+  background-repeat: no-repeat; background-position: right 1.2rem center;
+  background-color: var(--faint); padding-right: 2.5rem;
 }
 .form-group select option { background: var(--dark); }
 .form-group input:focus,
 .form-group textarea:focus,
-.form-group select:focus { border-color: var(--gold); }
+.form-group select:focus { border-color: var(--crimson); }
 .form-group textarea { resize: vertical; min-height: 140px; }
-
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
 
 .btn-submit {
   display: inline-flex; align-items: center; gap: 0.8rem;
   background: transparent;
-  border: 1px solid var(--gold);
-  color: var(--gold);
+  border: 1px solid var(--crimson);
+  color: var(--crimson);
   font-family: 'Space Grotesk', sans-serif;
   font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase;
-  padding: 1rem 2.5rem;
-  cursor: pointer;
-  transition: background 0.25s, color 0.25s;
-  margin-top: 0.5rem;
+  padding: 1rem 2.5rem; cursor: pointer;
+  transition: background 0.25s, color 0.25s; margin-top: 0.5rem;
 }
-.btn-submit:hover { background: var(--gold); color: var(--black); }
+.btn-submit:hover { background: var(--crimson); color: var(--white); }
 .btn-submit svg { transition: transform 0.25s; }
 .btn-submit:hover svg { transform: translateX(4px); }
 
 .success-msg {
-  display: none;
-  margin-top: 1.5rem;
-  padding: 1rem 1.5rem;
-  border-left: 2px solid var(--gold);
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.7);
-  background: rgba(201,168,76,0.05);
+  display: none; margin-top: 1.5rem; padding: 1rem 1.5rem;
+  border-left: 2px solid var(--crimson);
+  font-size: 0.9rem; color: var(--muted);
+  background: rgba(184,32,53,0.05);
 }
 
+/* ── FOOTER ────────────────────────────────────────────── */
 footer {
   padding: 2rem 4rem;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid var(--crimson);
   display: flex; justify-content: space-between; align-items: center;
   font-size: 0.78rem; color: rgba(255,255,255,0.25);
 }
-.footer-logo { font-family: 'Cormorant Garamond', serif; font-style: italic; color: rgba(255,255,255,0.4); font-size: 1rem; }
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  color: rgba(255,255,255,0.4); font-size: 1rem;
+}
 
+/* ── MOBIL ─────────────────────────────────────────────── */
 @media (max-width: 768px) {
   nav { padding: 1rem 1.5rem; }
   nav ul { display: none; }
   .hamburger { display: flex; }
-  .page-hero { padding: 6rem 1.5rem 3.5rem; }
+  .page-hero { padding: 5rem 1.5rem 3.5rem; min-height: 35vh; }
+  .page-hero-ghost { display: none; }
   .contact-layout { grid-template-columns: 1fr; }
   .contact-info { padding: 3.5rem 1.5rem; }
   .contact-form-wrap { padding: 3.5rem 1.5rem; }
@@ -204,12 +276,15 @@ footer {
 </head>
 <body>
 
+<div class="grain" aria-hidden="true"></div>
+<div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+
 <nav>
   <a href="index.html" class="nav-logo"><span>H</span>elena</a>
   <ul>
     <li><a href="index.html#films">Filmer</a></li>
-    <li><a href="index.html#timeline">Historie</a></li>
-    <li><a href="index.html#gallery">Bilder</a></li>
+    <li><a href="index.html#produksjon">Produksjon</a></li>
+    <li><a href="index.html#om">Om</a></li>
     <li><a href="index.html#cv">CV</a></li>
     <li><a href="contact.html" class="active">Kontakt</a></li>
   </ul>
@@ -219,14 +294,16 @@ footer {
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="index.html#films">Filmer</a>
-  <a href="index.html#timeline">Historie</a>
-  <a href="index.html#gallery">Bilder</a>
-  <a href="index.html#cv">CV</a>
-  <a href="contact.html">Kontakt</a>
+  <a href="index.html#films" onclick="closeMenu()">Filmer</a>
+  <a href="index.html#produksjon" onclick="closeMenu()">Produksjon</a>
+  <a href="index.html#om" onclick="closeMenu()">Om</a>
+  <a href="index.html#cv" onclick="closeMenu()">CV</a>
+  <a href="contact.html" onclick="closeMenu()">Kontakt</a>
 </div>
 
 <div class="page-hero">
+  <div class="page-hero-stripe"></div>
+  <div class="page-hero-ghost" aria-hidden="true">KONTAKT</div>
   <div class="page-hero-content">
     <p class="eyebrow">La oss snakke</p>
     <h1>Ta <em>kontakt</em></h1>
@@ -236,29 +313,29 @@ footer {
 <div class="contact-layout">
 
   <div class="contact-info">
-    <h2>Alltid åpen for nye prosjekter</h2>
-    <p>Enten du har en idé til et samarbeid, ønsker å booke Helena til et prosjekt, eller bare vil ta en prat om film — ikke nøl med å ta kontakt.</p>
+    <h2 class="reveal">Alltid åpen for nye prosjekter</h2>
+    <p class="reveal">Enten du har en idé til et samarbeid, ønsker å booke Helena til et prosjekt, eller bare vil ta en prat om film — ikke nøl med å ta kontakt.</p>
 
-    <div class="contact-block">
+    <div class="contact-block reveal">
       <div class="contact-block-label">E-post</div>
       <div class="contact-block-value">
         <a href="mailto:hmohncke@gmail.com">hmohncke@gmail.com</a>
       </div>
     </div>
 
-    <div class="contact-block">
+    <div class="contact-block reveal">
       <div class="contact-block-label">Telefon</div>
       <div class="contact-block-value">
         <a href="tel:+4795879209">+47 958 79 209</a>
       </div>
     </div>
 
-    <div class="contact-block">
+    <div class="contact-block reveal">
       <div class="contact-block-label">Sted</div>
       <div class="contact-block-value">Oslo, Norge</div>
     </div>
 
-    <div class="contact-block">
+    <div class="contact-block reveal">
       <div class="contact-block-label">Sosiale medier</div>
       <div class="social-row">
         <a href="#" class="social-link">Instagram</a>
@@ -269,9 +346,9 @@ footer {
   </div>
 
   <div class="contact-form-wrap">
-    <h2>Send en melding</h2>
+    <h2 class="reveal">Send en melding</h2>
     <form id="contactForm" onsubmit="handleSubmit(event)">
-      <div class="form-row">
+      <div class="form-row reveal">
         <div class="form-group">
           <label for="name">Navn</label>
           <input type="text" id="name" name="name" placeholder="Ditt navn" required />
@@ -281,7 +358,7 @@ footer {
           <input type="email" id="email" name="email" placeholder="din@epost.no" required />
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group reveal">
         <label for="subject">Gjelder</label>
         <select id="subject" name="subject">
           <option value="">Velg et tema</option>
@@ -291,18 +368,20 @@ footer {
           <option value="annet">Annet</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="form-group reveal">
         <label for="message">Melding</label>
         <textarea id="message" name="message" placeholder="Fortell gjerne litt om prosjektet ditt…" required></textarea>
       </div>
-      <button type="submit" class="btn-submit">
-        Send melding
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <div class="success-msg" id="successMsg">
-        Takk for meldingen! Helena svarer vanligvis innen 1–2 virkedager.
+      <div class="reveal">
+        <button type="submit" class="btn-submit">
+          Send melding
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="success-msg" id="successMsg">
+          Takk for meldingen! Helena svarer vanligvis innen 1–2 virkedager.
+        </div>
       </div>
     </form>
   </div>
@@ -311,24 +390,42 @@ footer {
 
 <footer>
   <div class="footer-logo">Helena Møhncke — Filmregissør</div>
-  <div>© 2024 · Alle rettigheter forbeholdt</div>
+  <div>© 2026 · Alle rettigheter forbeholdt</div>
 </footer>
 
 <script>
-function handleSubmit(e) {
-  e.preventDefault();
-  document.getElementById('contactForm').querySelectorAll('input, textarea, select, button').forEach(el => el.disabled = true);
-  document.getElementById('successMsg').style.display = 'block';
-}
-</script>
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-<script>
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 hamburger.addEventListener('click', () => {
   hamburger.classList.toggle('open');
   mobileMenu.classList.toggle('open');
 });
+function closeMenu() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+}
+
+const progressFill = document.getElementById('progressFill');
+window.addEventListener('scroll', () => {
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  progressFill.style.width = (window.scrollY / total * 100) + '%';
+}, { passive: true });
+
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('contactForm').querySelectorAll('input, textarea, select, button').forEach(el => el.disabled = true);
+  document.getElementById('successMsg').style.display = 'block';
+}
 </script>
 </body>
 </html>
