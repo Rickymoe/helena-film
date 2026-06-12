@@ -249,6 +249,32 @@ nav ul li a:hover::after { transform: scaleX(1); }
 .film-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 0.25rem; }
 .film-card.small .film-title { font-size: 1.15rem; }
 .film-genre { font-size: 0.72rem; color: rgba(255,255,255,0.45); }
+
+/* ── TIDSLINJE INTERLUDE ────────────────────────────── */
+.timeline { padding: 6rem 4rem; background: var(--dark); }
+.timeline-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; margin-top: 3.5rem;
+}
+.timeline-item {
+  padding: 2.2rem 2.8rem; border-left: 1px solid rgba(201,168,76,0.18);
+  position: relative; transition: background 0.3s;
+}
+.timeline-item:hover { background: rgba(201,168,76,0.03); }
+.timeline-item::before {
+  content: ''; position: absolute; left: -5px; top: 2.6rem;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--gold);
+}
+.timeline-year {
+  font-size: 0.68rem; letter-spacing: 3px; color: var(--crimson);
+  text-transform: uppercase; margin-bottom: 0.4rem;
+}
+.timeline-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem; font-weight: 400; margin-bottom: 0.4rem;
+}
+.timeline-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
 </style>
 </head>
 <body>
@@ -341,7 +367,32 @@ nav ul li a:hover::after { transform: scaleX(1); }
     </div>
   </div>
 </section>
-<!-- TIDSLINJE INTERLUDE -->
+<section class="timeline" id="timeline">
+  <p class="section-eyebrow reveal">Reisen</p>
+  <h2 class="section-title reveal">Fra drøm til regissørstolen</h2>
+  <div class="timeline-grid">
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2018</div>
+      <div class="timeline-title">Første kortfilm</div>
+      <p class="timeline-desc">Med et lånt kamera og venner som skuespillere laget Helena sin første kortfilm i videregående.</p>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2020</div>
+      <div class="timeline-title">Filmskolen</div>
+      <p class="timeline-desc">Tatt opp ved filmlinjen — begynte å utvikle sin egen stemme og estetikk.</p>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2022</div>
+      <div class="timeline-title">Første festivalpremiere</div>
+      <p class="timeline-desc">«Nattskiftet» valgt ut til Nordic Film Festival og fikk strålende kritikker.</p>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2024</div>
+      <div class="timeline-title">Ferdig utdannet</div>
+      <p class="timeline-desc">Avslutter utdannelsen med et sterkt avgangsprosjekt — klar for sitt første profesjonelle prosjekt.</p>
+    </div>
+  </div>
+</section>
 <!-- CHAPTER 02: PRODUKSJON -->
 <!-- CHAPTER 03: OM HELENA -->
 <!-- PORTRETT-STRIP INTERLUDE -->
