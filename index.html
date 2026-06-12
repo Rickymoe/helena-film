@@ -717,7 +717,6 @@ footer {
 </footer>
 <script>
 // Scroll-reveal
-const revealThreshold = window.innerWidth <= 768 ? 0.05 : 0.12;
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -725,7 +724,7 @@ const revealObserver = new IntersectionObserver((entries) => {
       revealObserver.unobserve(e.target);
     }
   });
-}, { threshold: revealThreshold });
+}, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 // Hamburger
 const hamburger = document.getElementById('hamburger');
