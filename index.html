@@ -341,6 +341,40 @@ nav ul li a:hover::after { transform: scaleX(1); }
   filter: grayscale(25%); transition: filter 0.4s;
 }
 .portrait-strip img:hover { filter: grayscale(0%); }
+
+/* ── GALLERI INTERLUDE ──────────────────────────────── */
+.gallery { padding: 7rem 4rem; background: var(--black); }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 290px 290px;
+  gap: 3px; margin-top: 4rem;
+}
+.g1 { grid-column: span 5; grid-row: span 2; }
+.g2 { grid-column: span 7; }
+.g3 { grid-column: span 3; }
+.g4 { grid-column: span 2; }
+.g5 { grid-column: span 2; }
+.gallery-item { overflow: hidden; }
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  filter: grayscale(20%); transition: transform 0.5s, filter 0.4s;
+}
+.gallery-item:hover img { transform: scale(1.06); filter: grayscale(0%); }
+
+/* ── CHAPTER 04: CV ─────────────────────────────────── */
+.cv-section { padding: 7rem 4rem; background: var(--off-black); }
+.cv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 4rem; }
+.cv-block h3 {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
+  font-weight: 300; color: var(--gold); margin-bottom: 2rem;
+  padding-bottom: 0.6rem; border-bottom: 1px solid var(--crimson);
+}
+.cv-item { padding: 1.4rem 0; border-bottom: 1px solid var(--faint); }
+.cv-item:last-child { border-bottom: none; }
+.cv-meta { font-size: 0.68rem; letter-spacing: 2px; color: var(--crimson); text-transform: uppercase; margin-bottom: 0.25rem; }
+.cv-title { font-size: 0.97rem; font-weight: 400; margin-bottom: 0.2rem; }
+.cv-detail { font-size: 0.83rem; color: var(--muted); font-weight: 300; }
 </style>
 </head>
 <body>
@@ -504,8 +538,67 @@ nav ul li a:hover::after { transform: scaleX(1); }
     <img src="https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?w=700&q=80" alt="Klipping" loading="lazy" />
   </div>
 </section>
-<!-- GALLERI INTERLUDE -->
-<!-- CHAPTER 04: CV -->
+<section class="gallery" id="gallery">
+  <p class="section-eyebrow reveal">Fra produksjon</p>
+  <h2 class="section-title reveal">Bak kameraet</h2>
+  <p class="section-sub reveal">Glimt fra settet — de øyeblikkene som sjelden havner på lerretet.</p>
+  <div class="gallery-grid">
+    <div class="gallery-item g1 reveal"><img src="images/StillBilder/IMG_7758.jpg" alt="Bak kameraet" loading="lazy" /></div>
+    <div class="gallery-item g2 reveal"><img src="images/StillBilder/IMG_7760.jpg" alt="Bak kameraet" loading="lazy" /></div>
+    <div class="gallery-item g3 reveal"><img src="images/StillBilder/IMG_7765.jpg" alt="Bak kameraet" loading="lazy" /></div>
+    <div class="gallery-item g4 reveal"><img src="images/StillBilder/IMG_7767.jpg" alt="Bak kameraet" loading="lazy" /></div>
+    <div class="gallery-item g5 reveal"><img src="images/StillBilder/IMG_7770.jpg" alt="Bak kameraet" loading="lazy" /></div>
+  </div>
+</section>
+
+<section class="cv-section" id="cv">
+  <div style="position:relative;overflow:hidden;">
+    <div class="chapter-ghost" aria-hidden="true">04</div>
+    <div class="chapter-header reveal">
+      <div class="chapter-number">04 — CV</div>
+      <p class="section-eyebrow">Curriculum Vitae</p>
+      <h2 class="section-title">Erfaring og utdanning</h2>
+    </div>
+  </div>
+  <div class="cv-grid">
+    <div class="cv-block">
+      <h3 class="reveal">Utdanning</h3>
+      <div class="cv-item reveal">
+        <div class="cv-meta">2020 — 2024</div>
+        <div class="cv-title">Bachelor i filmregi</div>
+        <div class="cv-detail">Norsk filmskole, Lillehammer</div>
+      </div>
+      <div class="cv-item reveal">
+        <div class="cv-meta">2017 — 2020</div>
+        <div class="cv-title">Medier og kommunikasjon</div>
+        <div class="cv-detail">Videregående skole</div>
+      </div>
+      <div class="cv-item reveal">
+        <div class="cv-meta">2023</div>
+        <div class="cv-title">Workshopkurs i dokumentar</div>
+        <div class="cv-detail">DOX:LAB, København</div>
+      </div>
+    </div>
+    <div class="cv-block">
+      <h3 class="reveal">Erfaring</h3>
+      <div class="cv-item reveal">
+        <div class="cv-meta">2023 — 2024</div>
+        <div class="cv-title">Regi &amp; manus — «Mellom Fjordene»</div>
+        <div class="cv-detail">Eget produksjonsprosjekt</div>
+      </div>
+      <div class="cv-item reveal">
+        <div class="cv-meta">2022</div>
+        <div class="cv-title">Regissørassistent</div>
+        <div class="cv-detail">NRK Drama, Oslo</div>
+      </div>
+      <div class="cv-item reveal">
+        <div class="cv-meta">2021</div>
+        <div class="cv-title">Frilansfotograf &amp; klipper</div>
+        <div class="cv-detail">Diverse reklameproduksjoner</div>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- KONTAKT -->
 <!-- FOOTER -->
 <script>
