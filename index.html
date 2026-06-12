@@ -304,6 +304,43 @@ nav ul li a:hover::after { transform: scaleX(1); }
 .video-card-year { font-size: 0.68rem; letter-spacing: 3px; color: var(--crimson); text-transform: uppercase; margin-bottom: 0.25rem; }
 .video-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 0.2rem; }
 .video-card-genre { font-size: 0.72rem; color: rgba(255,255,255,0.45); }
+/* ── CHAPTER 03: OM HELENA ──────────────────────────── */
+.about { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; }
+.about-image { position: relative; overflow: hidden; min-height: 560px; }
+.about-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.about-image::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to right, transparent 55%, var(--off-black));
+}
+.about-content {
+  background: var(--off-black); padding: 6rem 5rem;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative;
+}
+.about-content::before {
+  content: '03'; position: absolute; right: 2rem; top: 2rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 8rem; font-weight: 300; font-style: italic;
+  color: rgba(255,255,255,0.025); line-height: 1;
+}
+.about-quote {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.65rem;
+  font-style: italic; font-weight: 300; color: var(--gold-light);
+  line-height: 1.45; margin-bottom: 2rem;
+  border-left: 2px solid var(--crimson); padding-left: 1.4rem;
+}
+.about-text {
+  color: var(--muted); font-size: 0.93rem; line-height: 1.85;
+  font-weight: 300; margin-bottom: 1.4rem;
+}
+
+/* ── PORTRETT-STRIP ─────────────────────────────────── */
+.portrait-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; height: 380px; }
+.portrait-strip img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  filter: grayscale(25%); transition: filter 0.4s;
+}
+.portrait-strip img:hover { filter: grayscale(0%); }
 </style>
 </head>
 <body>
@@ -448,8 +485,25 @@ nav ul li a:hover::after { transform: scaleX(1); }
     </div>
   </div>
 </section>
-<!-- CHAPTER 03: OM HELENA -->
-<!-- PORTRETT-STRIP INTERLUDE -->
+<section id="om">
+  <div class="about">
+    <div class="about-image reveal">
+      <img src="https://images.unsplash.com/photo-1599508704512-2f19efd1e35f?w=800&q=80" alt="Helena bak kamera" loading="lazy" />
+    </div>
+    <div class="about-content">
+      <div class="chapter-number reveal">03 — Om Helena</div>
+      <h2 class="section-title reveal">En lidenskap<br>som startet tidlig</h2>
+      <p class="about-quote reveal">"Film er den eneste kunsten som kan stoppe tiden."</p>
+      <p class="about-text reveal">Helena vokste opp med kamera i hånden og historier i hodet. Det som begynte som korte videoer på mobil ble til en fullverdig utdannelse i filmregi.</p>
+      <p class="about-text reveal">Med et skarpt blikk for det menneskelige og en unik evne til å skape ro i bildet, lager Helena filmer som setter seg fast lenge etter rulleteksten.</p>
+    </div>
+  </div>
+  <div class="portrait-strip">
+    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=700&q=80" alt="På settet" loading="lazy" />
+    <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=700&q=80" alt="Kamera" loading="lazy" />
+    <img src="https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?w=700&q=80" alt="Klipping" loading="lazy" />
+  </div>
+</section>
 <!-- GALLERI INTERLUDE -->
 <!-- CHAPTER 04: CV -->
 <!-- KONTAKT -->
