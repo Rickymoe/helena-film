@@ -252,7 +252,15 @@ nav ul li a:hover::after { transform: scaleX(1); }
 .film-genre { font-size: 0.72rem; color: rgba(255,255,255,0.45); }
 
 /* ── TIDSLINJE INTERLUDE ────────────────────────────── */
-.timeline { padding: 6rem 4rem; background: var(--dark); }
+.timeline {
+  padding: 6rem 4rem;
+  background: linear-gradient(to bottom,
+    #060608 0%,
+    #1a100a 12%,
+    #1a100a 88%,
+    #060608 100%
+  );
+}
 .timeline-grid {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 0; margin-top: 3.5rem;
