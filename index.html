@@ -148,7 +148,9 @@ nav ul li a:hover::after { transform: scaleX(1); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @media (hover: hover) {
-  .hero h1 {
+  .hero h1,
+  h2.section-title,
+  h3 {
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   .hero-ghost {
@@ -857,6 +859,25 @@ if (heroVideo) {
       ghost.style.transform   = '';
     });
   }, 1300);
+})();
+
+// ── HEADING PARALLAX (global) ───────────────────────
+(function () {
+  if (!window.matchMedia('(hover: hover)').matches) return;
+  const headings = document.querySelectorAll('h2.section-title, h3');
+
+  window.addEventListener('mousemove', (e) => {
+    const dx = (e.clientX - window.innerWidth  / 2) / (window.innerWidth  / 2);
+    const dy = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
+    const vh = window.innerHeight;
+
+    headings.forEach(h => {
+      const r = h.getBoundingClientRect();
+      if (r.bottom > 0 && r.top < vh) {
+        h.style.transform = `translate(${dx * 20}px, ${dy * 12}px)`;
+      }
+    });
+  });
 })();
 
 // ── ANIMATED FILM GRAIN ─────────────────────────────
