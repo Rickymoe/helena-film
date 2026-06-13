@@ -359,7 +359,15 @@ nav ul li a:hover::after { transform: scaleX(1); }
 .gallery-item:hover img { transform: scale(1.04); filter: grayscale(0%); }
 
 /* ── CHAPTER 04: CV ─────────────────────────────────── */
-.cv-section { padding: 7rem 4rem; background: var(--off-black); }
+.cv-section {
+  padding: 7rem 4rem;
+  position: relative; overflow: hidden;
+  background: url('images/IMG_5058.JPEG') center/cover no-repeat;
+}
+.cv-section::before {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(6,6,8,0.82);
+}
 .cv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 4rem; }
 .cv-block h3 {
   font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
@@ -652,7 +660,7 @@ footer {
 </section>
 
 <section class="cv-section" id="cv">
-  <div style="position:relative;overflow:hidden;">
+  <div style="position:relative;z-index:1;overflow:hidden;">
     <div class="chapter-ghost" aria-hidden="true">04</div>
     <div class="chapter-header reveal">
       <div class="chapter-number">04 — CV</div>
