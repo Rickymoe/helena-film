@@ -384,13 +384,14 @@ nav ul li a:hover::after { transform: scaleX(1); }
 }
 .gallery-item {
   break-inside: avoid; margin-bottom: 3px;
-  overflow: hidden; display: block;
+  display: block; position: relative;
 }
 .gallery-item img {
   width: 100%; display: block;
-  filter: grayscale(25%); transition: transform 0.5s ease, filter 0.4s ease;
+  filter: grayscale(25%);
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s ease;
 }
-.gallery-item:hover img { transform: scale(1.04); filter: grayscale(0%); }
+.gallery-item:hover img { transform: scale(1.12); filter: grayscale(0%); }
 
 /* ── CHAPTER 04: CV ─────────────────────────────────── */
 .cv-section {
