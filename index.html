@@ -306,7 +306,7 @@ nav ul li a:hover::after { transform: scaleX(1); }
 .video-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 0.2rem; }
 .video-card-genre { font-size: 0.72rem; color: rgba(255,255,255,0.45); }
 /* ── CHAPTER 03: OM HELENA ──────────────────────────── */
-.about { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; }
+.about { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; padding-bottom: 6rem; }
 .about-image { position: relative; overflow: hidden; min-height: 560px; }
 .about-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .about-image::after {
@@ -314,10 +314,25 @@ nav ul li a:hover::after { transform: scaleX(1); }
   background: linear-gradient(to right, transparent 55%, var(--off-black));
 }
 .about-content {
-  background: var(--off-black); padding: 6rem 5rem;
+  padding: 6rem 5rem;
   display: flex; flex-direction: column; justify-content: center;
-  position: relative;
+  position: relative; overflow: hidden;
 }
+.about-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+}
+.about-video-overlay {
+  position: absolute; inset: 0;
+  background: rgba(6,6,8,0.78);
+}
+.about-bottom-fade {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+  background: linear-gradient(to bottom, transparent, #060608);
+  z-index: 2; pointer-events: none;
+}
+.about-content > *:not(.about-video):not(.about-video-overlay) { position: relative; z-index: 1; }
 .about-content::before {
   content: '03'; position: absolute; right: 2rem; top: 2rem;
   font-family: 'Cormorant Garamond', serif;
@@ -626,6 +641,10 @@ footer {
       <img src="https://images.unsplash.com/photo-1599508704512-2f19efd1e35f?w=800&q=80" alt="Helena bak kamera" loading="lazy" />
     </div>
     <div class="about-content">
+      <video class="about-video" autoplay muted loop playsinline>
+        <source src="video/about-loop.mp4" type="video/mp4">
+      </video>
+      <div class="about-video-overlay"></div>
       <div class="chapter-number reveal">03 — Om Helena</div>
       <h2 class="section-title reveal">En lidenskap<br>som startet tidlig</h2>
       <p class="about-quote reveal">"Film er den eneste kunsten som kan stoppe tiden."</p>
@@ -633,6 +652,7 @@ footer {
       <p class="about-text reveal">Med et skarpt blikk for det menneskelige og en unik evne til å skape ro i bildet, lager Helena filmer som setter seg fast lenge etter rulleteksten.</p>
     </div>
   </div>
+  <div class="about-bottom-fade"></div>
   <div class="portrait-strip">
     <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=700&q=80" alt="På settet" loading="lazy" />
     <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=700&q=80" alt="Kamera" loading="lazy" />
