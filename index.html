@@ -396,16 +396,32 @@ nav ul li a:hover::after { transform: scaleX(1); }
 .cv-detail { font-size: 0.83rem; color: var(--muted); font-weight: 300; }
 
 /* ── KONTAKT ────────────────────────────────────────── */
-.contact { padding: 9rem 4rem; background: var(--black); text-align: center; position: relative; overflow: hidden; }
-.contact::before {
+.contact {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 70vh; position: relative; overflow: hidden;
+}
+.contact-image {
+  background: url('images/kontakt-bilde.jpg') center/cover no-repeat;
+  position: relative;
+}
+.contact-image::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to right, transparent 60%, #060608);
+}
+.contact-content {
+  background: var(--black); padding: 7rem 5rem;
+  display: flex; flex-direction: column; justify-content: center;
+  text-align: left; position: relative;
+}
+.contact-content::before {
   content: 'HELENA'; position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  font-family: 'Cormorant Garamond', serif; font-size: 18vw;
+  font-family: 'Cormorant Garamond', serif; font-size: 12vw;
   font-weight: 300; color: rgba(255,255,255,0.018);
   white-space: nowrap; pointer-events: none;
 }
-.contact .section-title { margin: 0 auto 0.8rem; }
-.contact .section-sub { margin: 0 auto 3rem; text-align: center; }
+.contact .section-title { margin: 0 0 0.8rem; }
+.contact .section-sub { margin: 0 0 3rem; text-align: left; }
 .contact-email {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(1.8rem, 4vw, 3rem); font-style: italic;
@@ -728,14 +744,19 @@ footer {
   </div>
 </section>
 <section class="contact">
-  <p class="section-eyebrow reveal">Kontakt</p>
-  <h2 class="section-title reveal">La oss lage noe sammen</h2>
-  <p class="section-sub reveal" style="max-width:400px;">For samarbeid, spørsmål om prosjekter eller bare en god prat om film.</p>
-  <a href="mailto:hmohncke@gmail.com" class="contact-email reveal">hmohncke@gmail.com</a>
-  <div class="social-links reveal">
-    <a href="#" class="social-link">Instagram</a>
-    <a href="#" class="social-link">Vimeo</a>
-    <a href="#" class="social-link">LinkedIn</a>
+  <div class="contact-image"></div>
+  <div class="contact-content">
+    <div style="position:relative;z-index:1;">
+      <p class="section-eyebrow reveal">Kontakt</p>
+      <h2 class="section-title reveal">La oss lage noe sammen</h2>
+      <p class="section-sub reveal">For samarbeid, spørsmål om prosjekter eller bare en god prat om film.</p>
+      <a href="mailto:hmohncke@gmail.com" class="contact-email reveal">hmohncke@gmail.com</a>
+      <div class="social-links reveal" style="justify-content:flex-start;">
+        <a href="#" class="social-link">Instagram</a>
+        <a href="#" class="social-link">Vimeo</a>
+        <a href="#" class="social-link">LinkedIn</a>
+      </div>
+    </div>
   </div>
 </section>
 
