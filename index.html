@@ -51,6 +51,13 @@ body {
     rgba(0,0,0,0.025) 4px
   );
 }
+/* ── TYPEWRITER CURSOR ──────────────────────────────── */
+@keyframes tw-blink { 50% { opacity: 0; } }
+.tw-cursor {
+  color: var(--crimson);
+  animation: tw-blink 0.7s step-end infinite;
+  margin-left: 1px;
+}
 /* ── SCROLL-REVEAL ─────────────────────────────────── */
 .reveal {
   clip-path: inset(0 0 100% 0);
@@ -837,6 +844,40 @@ if (heroVideo) {
     }
   });
 }
+
+// ── CHAPTER TYPEWRITER ──────────────────────────────
+(function () {
+  function typewrite(el, text) {
+    let i = 0;
+    const cursor = document.createElement('span');
+    cursor.className = 'tw-cursor';
+    cursor.textContent = '|';
+    el.appendChild(cursor);
+    const timer = setInterval(() => {
+      cursor.insertAdjacentText('beforebegin', text[i]);
+      i++;
+      if (i >= text.length) {
+        clearInterval(timer);
+        setTimeout(() => cursor.remove(), 700);
+      }
+    }, 55);
+  }
+
+  document.querySelectorAll('.chapter-number').forEach(el => {
+    const text = el.textContent.trim();
+    el.textContent = '';
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          obs.unobserve(el);
+          setTimeout(() => typewrite(el, text), 900);
+        }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
+    obs.observe(el);
+  });
+})();
 
 // ── HERO PARALLAX ───────────────────────────────────
 (function () {
