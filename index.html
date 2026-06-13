@@ -254,12 +254,14 @@ nav ul li a:hover::after { transform: scaleX(1); }
 /* ── TIDSLINJE INTERLUDE ────────────────────────────── */
 .timeline {
   padding: 6rem 4rem;
-  background: linear-gradient(to bottom,
-    #060608 0%,
-    #1a100a 12%,
-    #1a100a 88%,
-    #060608 100%
-  );
+  background:
+    linear-gradient(to bottom,
+      rgba(6,6,8,1) 0%,
+      rgba(26,16,10,0.87) 15%,
+      rgba(26,16,10,0.87) 85%,
+      rgba(6,6,8,1) 100%
+    ),
+    url('images/coffee-stain.jpg') center/cover no-repeat;
 }
 .timeline-grid {
   display: grid; grid-template-columns: 1fr 1fr;
